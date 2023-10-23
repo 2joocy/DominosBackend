@@ -24,6 +24,7 @@ export function OrdersController({ ordersRepository }: { ordersRepository: PgOrd
 				id: randomUUID(),
 				userId: req.body.decoded.userId,
 				pizzas: parsedPizzas,
+				price: parsedPizzas.reduce((acc, pizza) => acc + pizza.price, 0),
 			};
 
 			await ordersRepository.save(order);

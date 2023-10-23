@@ -23,6 +23,7 @@ export type Order = {
 	id: string;
 	userId: string;
 	pizzas: z.infer<typeof PizzaSchema>[];
+	price: number;
 };
 
 export type Pizza = z.infer<typeof PizzaSchema>;
