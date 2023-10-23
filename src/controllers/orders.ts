@@ -20,11 +20,20 @@ export function OrdersController({ ordersRepository }: { ordersRepository: PgOrd
 		try {
 			const { pizzas } = req.body as { pizzas: Pizza[] };
 			const parsedPizzas = pizzas.map((pizza) => PizzaSchema.parse(pizza));
+			const price = pizzas.reduce((accPizza, pizza) => {
+				const pricePerSize = {
+					Small: 10,
+					Medium: 15,
+					Large: 20,
+				};
+				const pricePerPizza = pizza.toppings.reduce((accTopping, topping) => accTopping + topping.price, 0) + pricePerSize[pizza.size];
+				return accPizza + pricePerPizza;
+			}, 0);
 			const order = {
 				id: randomUUID(),
 				userId: req.body.decoded.userId,
 				pizzas: parsedPizzas,
-				price: parsedPizzas.reduce((acc, pizza) => acc + pizza.price, 0),
+				price,
 			};
 
 			await ordersRepository.save(order);

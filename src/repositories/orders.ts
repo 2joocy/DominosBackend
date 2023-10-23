@@ -64,10 +64,12 @@ export class PgOrdersRepository implements OrdersRepository {
 	async init() {
 		await this.connectionPool.query(
 			`
+                DROP TABLE IF EXISTS orders;
                 CREATE TABLE IF NOT EXISTS orders (
                     id TEXT PRIMARY KEY,
                     user_id TEXT NOT NULL,
-                    pizzas JSONB NOT NULL
+                    pizzas JSONB NOT NULL,
+                    price NUMERIC NOT NULL,
                 )
             `,
 		);
