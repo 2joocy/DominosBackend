@@ -69,7 +69,7 @@ export class PgOrdersRepository implements OrdersRepository {
                     id TEXT PRIMARY KEY,
                     user_id TEXT NOT NULL,
                     pizzas JSONB NOT NULL,
-                    price NUMERIC NOT NULL,
+                    price NUMERIC NOT NULL
                 )
             `,
 		);
