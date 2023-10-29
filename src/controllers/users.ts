@@ -12,7 +12,7 @@ export function UserController({ usersRepository }: { usersRepository: PgUsersRe
 			const { email, password } = req.body as { email: string; password: string };
 			const user = await usersRepository.login(email, password);
 			const token = sign(user.id);
-			res.json({ token });
+			res.json({ user, token });
 		} catch (error) {
 			if (error instanceof Error) res.status(500).json({ message: error.message });
 		}
